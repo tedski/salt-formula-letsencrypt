@@ -23,7 +23,7 @@
 certbot_{{ domain }}:
   cmd.run:
     - name: >
-        certbot certonly {{ staging }} --non-interactive --agree-tos --no-self-upgrade --email {{ params.email|default(client.email) }}
+        {{ client.source.cli|default('certbot') }} certonly {{ staging }} --non-interactive --agree-tos --no-self-upgrade --email {{ params.email|default(client.email) }}
         {%- if auth.method == 'standalone' %}
         --standalone --standalone-supported-challenges {{ auth.type }} --http-01-port {{ auth.port }}
         {%- elif auth.method == 'webroot' %}
